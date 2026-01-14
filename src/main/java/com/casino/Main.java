@@ -2,11 +2,13 @@ package com.casino;
 
 import com.casino.games.BlackjackGame;
 import com.casino.models.BlackjackHand;
+import com.casino.models.Bet;
 import com.casino.models.Card;
+import com.casino.models.DealerAI;
 import com.casino.models.Deck;
-import com.casino.models.GameResult;
 import com.casino.models.Hand;
 import com.casino.models.Player;
+import com.casino.models.GameResult;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,6 +19,8 @@ public class Main {
         testGameResult(); 
         testBlackjackHand();
         testBlackjackGame();
+        testBetSystem();
+        testDealerAI();
     }
     
 
@@ -121,6 +125,36 @@ public class Main {
 
         BlackjackGame game = new BlackjackGame(player);
         System.out.println("Starting a new Blackjack game for " + player.getName());
+    }
+
+    private static void testBetSystem() {
+        System.out.println("--- Testing Bet System ---");
+        Bet bet1 = new Bet(100, Bet.BetType.STANDARD);
+        System.out.println("Created: " + bet1);
+
+        bet1.setResult(Bet.BetResult.WIN);
+        System.out.println("After win: " + bet1);
+        System.out.println("Payout (2:1): $" + bet1.getPayout(2));
+
+        Bet bet2 = new Bet(50, Bet.BetType.INSURANCE);
+        System.out.println("\nInsurance bet: " + bet2);
+        System.out.println("Payout (2:1): $" + bet2.getPayout(2) + "\n");
+    }
+
+    private static void testDealerAI() {
+        System.out.println("--- Testing Dealer AI ---");
+        DealerAI ai = new DealerAI();
+        System.out.println("Strategy: " + ai.getStrategy());
+
+        BlackjackHand hand1 = new BlackjackHand();
+        hand1.addCard(new Card(Card.Suit.HEARTS, Card.Rank.FIVE));
+        hand1.addCard(new Card(Card.Suit.SPADES, Card.Rank.EIGHT));
+        System.out.println("\nHand (5 + 8 = 13): Should hit? " + ai.shouldHit(hand1));
+
+        BlackjackHand hand2 = new BlackjackHand();
+        hand2.addCard(new Card(Card.Suit.HEARTS, Card.Rank.TEN));
+        hand2.addCard(new Card(Card.Suit.SPADES, Card.Rank.SEVEN));
+        System.out.println("Hand (10 + 7 = 17): Should hit? " + ai.shouldHit(hand2) + "\n");
     }
 }
         
