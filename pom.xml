@@ -112,6 +112,16 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Maven Exec Plugin for running CLI -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.casino.cli.CasinoApplication</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

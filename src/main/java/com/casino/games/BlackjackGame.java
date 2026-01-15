@@ -9,6 +9,7 @@ import com.casino.models.Deck;
 import com.casino.models.Player;
 import com.casino.exceptions.InvalidGameActionException;
 import com.casino.exceptions.InsufficientFundsException;
+import com.casino.utils.InputValidator;
 
 public class BlackjackGame extends Game {
     private BlackjackHand playerHand;
@@ -87,16 +88,14 @@ public class BlackjackGame extends Game {
     }
 
     private Bet placeBet() throws InsufficientFundsException {
-        System.out.println("\nCurrent balance: $" + player.getBalance());
-        System.out.print("Enter bet amount: $");
-        double betAmount = Double.parseDouble(System.console().readLine());
-
-        if (betAmount <= 0) {
-            throw new InsufficientFundsException("Bet must be greater than 0");
-        }
-        if (betAmount > player.getBalance()) {
-            throw new InsufficientFundsException("Insufficient funds. Balance: $" + player.getBalance());
-        }
+        System.out.println("\n--- Betting Phase ---");
+        System.out.println("Current balance: $" + String.format("%.2f", player.getBalance()));
+        
+        double betAmount = InputValidator.getDoubleInput(
+            "Enter your bet amount: $", 
+            1, 
+            player.getBalance()
+        );
 
         player.placeBet(betAmount);
         return new Bet(betAmount, Bet.BetType.STANDARD);
@@ -133,10 +132,9 @@ public class BlackjackGame extends Game {
     }
 
     private void offerInsurance() throws InsufficientFundsException {
-        System.out.print("\nDealer shows Ace. Take insurance? (y/n): ");
-        String choice = System.console().readLine().toLowerCase();
-
-        if (choice.equals("y")) {
+        boolean takeInsurance = InputValidator.getYesNoInput("Dealer shows Ace. Take insurance");
+        
+        if (takeInsurance) {
             double insuranceAmount = gameState.getCurrentBet().getAmount() / 2;
             if (player.placeBet(insuranceAmount)) {
                 gameState.setInsuranceBet(insuranceAmount);
@@ -153,14 +151,13 @@ public class BlackjackGame extends Game {
 
         while (playerHand.getHandValue() < 21) {
             System.out.println("Your hand: " + playerHand);
-            System.out.print("Hit (h), Stand (s)");
             
+            String prompt = "Hit (h), Stand (s)";
             if (gameState.canDoubleDown() && playerHand.getCardCount() == 2) {
-                System.out.print(", or Double Down (d)");
+                prompt += ", or Double Down (d)";
             }
-            System.out.print("? ");
-
-            String action = System.console().readLine().toLowerCase();
+            
+            String action = InputValidator.getStringInput(prompt + "? ").toLowerCase();
 
             if (action.equals("h")) {
                 playerHand.addCard(deck.drawCard());
