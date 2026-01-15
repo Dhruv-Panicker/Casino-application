@@ -1,35 +1,21 @@
 # Casino Application
 
-A CLI-based casino application built in Java featuring Blackjack and Roulette games.
+A CLI-based casino application built in Java featuring Blackjack.
 
-## Project Structure
-
-```
-casino-app/
-├── src/
-│   ├── main/
-│   │   ├── java/com/casino/
-│   │   │   ├── models/          # Core game models (Card, Deck, Player, etc.)
-│   │   │   ├── games/           # Game implementations (Blackjack, Roulette)
-│   │   │   ├── cli/             # Command-line interface
-│   │   │   ├── utils/           # Utility classes
-│   │   │   └── Main.java        # Entry point
-│   │   └── resources/           # Configuration files
-│   └── test/
-│       └── java/com/casino/     # Unit tests
-├── pom.xml                      # Maven configuration
-└── README.md
-```
-
-## Building the Project
-
-### Prerequisites
-- Java 11+
+## Prerequisites
+- Java 21+
 - Maven 3.6+
+
+## Getting Started
 
 ### Build
 ```bash
 mvn clean compile
+```
+
+### Run the Application
+```bash
+mvn exec:java
 ```
 
 ### Run Tests
@@ -37,33 +23,76 @@ mvn clean compile
 mvn test
 ```
 
-### Package
-```bash
-mvn clean package
+## How to Play
+
+1. Start the application with `mvn exec:java`
+2. Enter your name and starting balance
+3. Choose to play Blackjack
+4. Place your bet and follow the prompts (Hit/Stand/Double Down)
+5. Try to beat the dealer without going over 21!
+
+## CLI Snapshot
+
+```
+╔════════════════════════════════════════╗
+║   🎰 WELCOME TO CASINO APPLICATION 🎰  ║
+╚════════════════════════════════════════╝
+
+Enter your name: Alice
+
+Choose your starting balance:
+1. $100
+2. $500
+3. $1000
+4. Custom amount
+Enter your choice (1-4): 2
+
+Welcome, Alice! You start with $500.00
+
+╔════════════════════════════════════════╗
+║        WELCOME TO CASINO APP           ║
+╚════════════════════════════════════════╝
+Player: Alice
+Balance: $500.00
+
+=== Main Menu ===
+1. Play Blackjack
+2. View Session Stats
+3. Exit Casino
+Enter your choice (1-3): 1
+
+=== Blackjack ===
+
+--- Betting Phase ---
+Current balance: $500.00
+Enter your bet amount: $50
+
+--- Initial Deal ---
+Dealer's hand: K♠ [Hidden]
+Your hand: 5♥ 7♦ [Value: 12]
+
+--- Your Turn ---
+Your hand: 5♥ 7♦ [Value: 12]
+Hit (h), Stand (s), or Double Down (d)? h
+You drew: Q♣
+
+Your hand: 5♥ 7♦ Q♣ [Value: 22]
+
+💥 Bust! You went over 21. Dealer wins!
+Current balance: $450.00
 ```
 
-### Run the Application
-```bash
-java -jar target/casino-app.jar
-```
+## Features
 
-## Development Phases
+- **Blackjack Game** - Classic Las Vegas rules
+- **Session Management** - Track balance and game history
+- **Safe Input Validation** - Prevents invalid bets and actions
+- **Game Statistics** - View your performance
 
-- **Phase 0**: Project setup & Java fundamentals (Card, Deck, Player)
-- **Phase 1**: OOP deep dive (Abstract classes, encapsulation)
-- **Phase 2**: Blackjack basic logic
-- **Phase 3**: Blackjack advanced features
-- **Phase 4**: Roulette game engine
-- **Phase 5**: CLI interface
-- **Phase 6**: Casino management & design patterns
-- **Phase 7**: Collections & data structures
-- **Phase 8**: Testing & quality assurance
-- **Phase 9**: Advanced features (Streams, logging)
-- **Phase 10**: Code quality & documentation
+## Technologies
 
-## Key Technologies
-- **Java 11** - Language
-- **Maven** - Build tool
-- **JUnit 5** - Testing framework
-- **Mockito** - Mocking library
-- **SLF4J + Logback** - Logging
+- Java 21
+- Maven
+- JUnit 5 (Testing)
+- Mockito (Mocking)
+- SLF4J + Logback (Logging)
